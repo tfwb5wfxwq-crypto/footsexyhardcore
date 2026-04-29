@@ -3,213 +3,206 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FootSexyHardcore</title>
+<title>FootSexyHardcore.sex</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#111; font-family: Arial, sans-serif; overflow: hidden; height: 100vh; }
+body { background:#000; font-family: Arial Black, Arial, sans-serif; overflow:hidden; height:100vh; width:100vw; }
 
-/* ── FOND : grille de photos visibles ── */
-.bg-grid {
-  position: fixed; inset: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 4px;
-  z-index: 0;
+/* FOND : mosaïque photos charme */
+.bg {
+  position:fixed; inset:0;
+  display:grid;
+  grid-template-columns: repeat(5,1fr);
+  gap:3px;
+  z-index:0;
 }
-.bg-grid img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: brightness(0.55) saturate(1.2);
-}
-
-/* Overlay léger sur le fond */
-.bg-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 1;
+.bg img {
+  width:100%; height:100%;
+  object-fit:cover;
+  filter: brightness(0.5) saturate(1.4) contrast(1.1);
 }
 
-/* ── POPUP CENTRAL ── */
+/* Vignette sombre sur les bords pour faire ressortir le popup */
+.vignette {
+  position:fixed; inset:0;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 100%);
+  z-index:1;
+}
+
+/* ══ POPUP ══ */
 .popup-wrap {
-  position: fixed; inset: 0;
-  z-index: 10;
-  display: flex; align-items: center; justify-content: center;
-}
-.popup {
-  background: #0f0f0f;
-  border: 3px solid #e91e8c;
-  border-radius: 12px;
-  width: 520px;
-  max-width: 92vw;
-  box-shadow: 0 0 80px rgba(233,30,140,0.5), 0 30px 60px rgba(0,0,0,0.8);
-  overflow: hidden;
+  position:fixed; inset:0; z-index:10;
+  display:flex; align-items:center; justify-content:center;
 }
 
-/* Fausse barre navigateur */
-.popup-bar {
-  background: #1a1a1a;
-  padding: 10px 14px;
-  display: flex; align-items: center; gap: 8px;
-  border-bottom: 1px solid #2a2a2a;
+.popup {
+  width: 560px; max-width:94vw;
+  background: rgba(8,8,8,0.97);
+  border: 3px solid #e91e8c;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow: 0 0 100px rgba(233,30,140,0.6), 0 40px 80px rgba(0,0,0,0.9);
+}
+
+/* Barre navigateur */
+.bar {
+  background:#111;
+  padding: 9px 16px;
+  display:flex; align-items:center; gap:8px;
+  border-bottom: 1px solid #222;
 }
 .dots { display:flex; gap:5px; }
-.dot { width:10px; height:10px; border-radius:50%; }
-.dot.r{background:#ff5f57;} .dot.y{background:#febc2e;} .dot.g{background:#28c840;}
-.url-bar {
-  flex:1; background:#0a0a0a; border-radius:20px;
-  padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,0.5);
-  display:flex; align-items:center; gap:6px; margin: 0 10px;
+.d { width:11px; height:11px; border-radius:50%; }
+.d.r{background:#ff5f57;} .d.y{background:#febc2e;} .d.g{background:#28c840;}
+.urlbar {
+  flex:1; margin:0 12px;
+  background:#0a0a0a; border-radius:20px;
+  padding:5px 14px; font-size:11px;
+  display:flex; align-items:center; gap:6px;
+  font-family: monospace;
 }
-.url-bar .lock { color: #28c840; font-size: 10px; }
-.url-bar .domain { color: #e91e8c; font-weight: 700; }
+.urlbar .lock { color:#28c840; }
+.urlbar .site { color:#e91e8c; font-weight:900; font-size:12px; }
 
-/* Corps du popup */
-.popup-body { padding: 32px 36px; text-align: center; }
+/* Corps */
+.body { padding: 36px 40px; text-align:center; }
 
-.popup-icon { font-size: 48px; margin-bottom: 10px; }
+.big-icon { font-size: 52px; margin-bottom:4px; }
 
-.popup-title {
-  font-size: 28px;
+.main-text {
+  font-size: 38px;
   font-weight: 900;
   color: white;
-  line-height: 1.2;
-  margin-bottom: 6px;
-  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
 }
-.popup-title span { color: #e91e8c; }
+.main-text em { color:#e91e8c; font-style:normal; }
 
-.popup-site {
-  font-size: 13px;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 2px;
-  margin-bottom: 24px;
-  text-transform: uppercase;
-}
-.popup-site strong { color: #e91e8c; font-size: 15px; }
-
-/* Mini historique */
-.history {
-  background: #161616;
-  border: 1px solid #2a2a2a;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 24px;
-  text-align: left;
-}
-.history-label {
-  padding: 8px 14px;
-  font-size: 9px;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border-bottom: 1px solid #1f1f1f;
-  background: #111;
-}
-.history-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 14px;
-  border-bottom: 1px solid #1a1a1a;
-}
-.history-item:last-child { border-bottom: none; }
-.h-thumb {
-  width: 56px; height: 40px; border-radius: 4px;
-  object-fit: cover; flex-shrink: 0;
-  filter: brightness(0.85);
-}
-.h-info { flex:1; }
-.h-title { font-size: 12px; font-weight: 700; color: white; margin-bottom: 2px; }
-.h-meta { font-size: 10px; color: rgba(255,255,255,0.35); }
-.h-time { font-size: 10px; color: #e91e8c; white-space: nowrap; }
-
-/* Bouton principal */
-.popup-btn {
-  width: 100%;
-  padding: 18px;
-  background: linear-gradient(135deg, #e91e8c, #c00060);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 18px;
+.site-name {
+  font-size: 16px;
+  color: #e91e8c;
   font-weight: 900;
-  letter-spacing: 1px;
-  cursor: pointer;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 20px rgba(233,30,140,0.4);
-  transition: filter .2s;
+  margin-bottom: 28px;
+  text-shadow: 0 0 20px rgba(233,30,140,0.5);
 }
-.popup-btn:hover { filter: brightness(1.1); }
-.popup-skip {
-  font-size: 11px;
-  color: rgba(255,255,255,0.25);
-  cursor: pointer;
-  text-decoration: underline;
+
+/* Ligne historique */
+.hist {
+  background:#0d0d0d;
+  border:1px solid #222;
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:28px;
+  text-align:left;
 }
-.popup-skip:hover { color: rgba(255,255,255,0.5); }
+.hist-head {
+  padding:7px 14px;
+  font-size:9px; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
+  border-bottom:1px solid #1a1a1a;
+}
+.hist-row {
+  display:flex; align-items:center; gap:12px;
+  padding:11px 14px;
+  border-bottom:1px solid #161616;
+}
+.hist-row:last-child{border-bottom:none;}
+.htb {
+  width:64px; height:44px; border-radius:4px;
+  object-fit:cover; flex-shrink:0;
+  filter:brightness(0.9) saturate(1.2);
+}
+.hinfo{flex:1;}
+.htitle{font-size:13px;font-weight:700;color:white;margin-bottom:3px;}
+.hmeta{font-size:11px;color:rgba(255,255,255,0.35);}
+.hmeta strong{color:#e91e8c;}
+.htime{font-size:11px;color:rgba(255,255,255,0.3);white-space:nowrap;}
+
+/* Bouton */
+.cta {
+  width:100%; padding:20px;
+  background: linear-gradient(135deg,#e91e8c,#c00060);
+  color:white; border:none; border-radius:8px;
+  font-size:20px; font-weight:900;
+  letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; margin-bottom:14px;
+  box-shadow: 0 6px 30px rgba(233,30,140,0.5);
+  transition: filter .15s;
+}
+.cta:hover{filter:brightness(1.1);}
+
+.skip {
+  font-size:12px; color:rgba(255,255,255,0.2);
+  cursor:pointer; text-decoration:underline;
+}
+.skip:hover{color:rgba(255,255,255,0.5);}
 </style>
 </head>
 <body>
 
-<!-- FOND PHOTOS -->
-<div class="bg-grid">
-  <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1469460340997-2f854421e72f?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1512310604669-443f26c35f52?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1529516222410-a269d812f500?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=400&q=80">
-  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80">
+<!-- FOND MOSAÏQUE -->
+<div class="bg">
+  <img src="https://images.unsplash.com/photo-1588516903720-8ceb67f96d2c?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1558171813-2c654d5e4c56?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=85">
+  <img src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=400&q=85">
 </div>
-<div class="bg-overlay"></div>
+<div class="vignette"></div>
 
 <!-- POPUP -->
 <div class="popup-wrap">
   <div class="popup">
-    <div class="popup-bar">
-      <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-      <div class="url-bar">
+
+    <div class="bar">
+      <div class="dots"><div class="d r"></div><div class="d y"></div><div class="d g"></div></div>
+      <div class="urlbar">
         <span class="lock">🔒</span>
-        <span class="domain">footsexyhardcore.sex</span>
+        <span class="site">footsexyhardcore.sex</span>
       </div>
     </div>
-    <div class="popup-body">
-      <div class="popup-icon">⚽🔥</div>
-      <div class="popup-title">Reprendre la<br><span>navigation ?</span></div>
-      <div class="popup-site">sur <strong>FOOTSEXYHARDCORE.SEX</strong></div>
 
-      <div class="history">
-        <div class="history-label">📂 Récemment consulté</div>
-        <div class="history-item">
-          <img class="h-thumb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=100&q=80">
-          <div class="h-info">
-            <div class="h-title">Vestiaire après le match</div>
-            <div class="h-meta">2:47 • HD 1080p • <span style="color:#e91e8c">1 500€</span></div>
+    <div class="body">
+      <div class="big-icon">⚽🔥</div>
+      <div class="main-text">Reprendre la<br><em>navigation ?</em></div>
+      <div class="site-name">footsexyhardcore.sex</div>
+
+      <div class="hist">
+        <div class="hist-head">📂 Dernières vidéos consultées</div>
+        <div class="hist-row">
+          <img class="htb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=120&q=80">
+          <div class="hinfo">
+            <div class="htitle">Vestiaire après le match</div>
+            <div class="hmeta">2:47 • 1080p • <strong>1 500€</strong></div>
           </div>
-          <div class="h-time">12 min</div>
+          <div class="htime">12 min</div>
         </div>
-        <div class="history-item">
-          <img class="h-thumb" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&q=80">
-          <div class="h-info">
-            <div class="h-title">Entraînement très privé</div>
-            <div class="h-meta">4:03 • 4K • <span style="color:#e91e8c">3 200€</span></div>
+        <div class="hist-row">
+          <img class="htb" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=120&q=80">
+          <div class="hinfo">
+            <div class="htitle">Entraînement très privé</div>
+            <div class="hmeta">4:03 • 4K • <strong>3 200€</strong></div>
           </div>
-          <div class="h-time">1h</div>
+          <div class="htime">1h</div>
         </div>
       </div>
 
-      <button class="popup-btn" onclick="this.closest('.popup-wrap').style.display='none'">
+      <button class="cta" onclick="this.closest('.popup-wrap').style.display='none'">
         ▶ REPRENDRE LA NAVIGATION
       </button>
-      <div class="popup-skip" onclick="this.closest('.popup-wrap').style.display='none'">
+      <div class="skip" onclick="this.closest('.popup-wrap').style.display='none'">
         Non merci, recommencer depuis le début
       </div>
     </div>
+
   </div>
 </div>
 
