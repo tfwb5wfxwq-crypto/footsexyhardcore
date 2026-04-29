@@ -3,428 +3,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FootSexyHardcore — Foot & Plaisir</title>
+<title>FootSexyHardcore</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background: #111; color: white; font-family: Arial, sans-serif; overflow-x: hidden; }
+body { background:#111; font-family: Arial, sans-serif; overflow: hidden; height: 100vh; }
 
-/* ── POPUP "REPRENDRE LA NAVIGATION" ── */
-.popup-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-  z-index: 9999; display: flex; align-items: center; justify-content: center;
+/* ── FOND : grille de photos visibles ── */
+.bg-grid {
+  position: fixed; inset: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  z-index: 0;
+}
+.bg-grid img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) saturate(1.2);
+}
+
+/* Overlay léger sur le fond */
+.bg-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
+}
+
+/* ── POPUP CENTRAL ── */
+.popup-wrap {
+  position: fixed; inset: 0;
+  z-index: 10;
+  display: flex; align-items: center; justify-content: center;
 }
 .popup {
-  background: #1a1a1a;
-  border: 2px solid #e91e8c;
-  border-radius: 8px;
-  width: 480px;
-  max-width: 95vw;
-  overflow: hidden;
-  box-shadow: 0 0 60px rgba(233,30,140,0.4);
-}
-.popup-header {
-  background: linear-gradient(135deg, #e91e8c, #c00060);
-  padding: 14px 20px;
-  display: flex; align-items: center; gap: 10px;
-}
-.popup-header .dot { width:12px; height:12px; border-radius:50%; }
-.popup-header .dot.r { background:#ff5f57; }
-.popup-header .dot.y { background:#febc2e; }
-.popup-header .dot.g { background:#28c840; }
-.popup-url { flex:1; background: rgba(0,0,0,0.3); border-radius:4px; padding: 4px 10px; font-size:11px; color:rgba(255,255,255,0.7); margin: 0 10px; }
-.popup-body { padding: 30px; text-align: center; }
-.popup-avatar {
-  width: 70px; height: 70px; border-radius: 50%;
-  background: linear-gradient(135deg, #e91e8c, #ff6b35);
-  margin: 0 auto 16px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 32px;
-}
-.popup-body h2 { font-size: 20px; font-weight: 900; margin-bottom: 6px; }
-.popup-body h2 span { color: #e91e8c; }
-.popup-body p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 20px; line-height: 1.5; }
-.popup-history {
   background: #0f0f0f;
+  border: 3px solid #e91e8c;
+  border-radius: 12px;
+  width: 520px;
+  max-width: 92vw;
+  box-shadow: 0 0 80px rgba(233,30,140,0.5), 0 30px 60px rgba(0,0,0,0.8);
+  overflow: hidden;
+}
+
+/* Fausse barre navigateur */
+.popup-bar {
+  background: #1a1a1a;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid #2a2a2a;
+}
+.dots { display:flex; gap:5px; }
+.dot { width:10px; height:10px; border-radius:50%; }
+.dot.r{background:#ff5f57;} .dot.y{background:#febc2e;} .dot.g{background:#28c840;}
+.url-bar {
+  flex:1; background:#0a0a0a; border-radius:20px;
+  padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,0.5);
+  display:flex; align-items:center; gap:6px; margin: 0 10px;
+}
+.url-bar .lock { color: #28c840; font-size: 10px; }
+.url-bar .domain { color: #e91e8c; font-weight: 700; }
+
+/* Corps du popup */
+.popup-body { padding: 32px 36px; text-align: center; }
+
+.popup-icon { font-size: 48px; margin-bottom: 10px; }
+
+.popup-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: white;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+.popup-title span { color: #e91e8c; }
+
+.popup-site {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.popup-site strong { color: #e91e8c; font-size: 15px; }
+
+/* Mini historique */
+.history {
+  background: #161616;
   border: 1px solid #2a2a2a;
-  border-radius: 6px;
-  padding: 14px;
-  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
   text-align: left;
 }
-.popup-history-title { font-size: 10px; color: #e91e8c; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-.popup-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 0; border-bottom: 1px solid #1f1f1f;
+.history-label {
+  padding: 8px 14px;
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #1f1f1f;
+  background: #111;
 }
-.popup-item:last-child { border-bottom: none; }
-.popup-thumb {
-  width: 50px; height: 36px; border-radius: 3px; object-fit: cover; flex-shrink: 0;
-  background: #333;
+.history-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #1a1a1a;
 }
-.popup-item-info { flex: 1; }
-.popup-item-title { font-size: 12px; font-weight: 700; }
-.popup-item-meta { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; }
-.popup-item-time { font-size: 10px; color: #e91e8c; }
+.history-item:last-child { border-bottom: none; }
+.h-thumb {
+  width: 56px; height: 40px; border-radius: 4px;
+  object-fit: cover; flex-shrink: 0;
+  filter: brightness(0.85);
+}
+.h-info { flex:1; }
+.h-title { font-size: 12px; font-weight: 700; color: white; margin-bottom: 2px; }
+.h-meta { font-size: 10px; color: rgba(255,255,255,0.35); }
+.h-time { font-size: 10px; color: #e91e8c; white-space: nowrap; }
+
+/* Bouton principal */
 .popup-btn {
-  width: 100%; padding: 14px; background: linear-gradient(135deg, #e91e8c, #c00060);
-  color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 900;
-  letter-spacing: 1px; cursor: pointer; text-transform: uppercase; margin-bottom: 10px;
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #e91e8c, #c00060);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 20px rgba(233,30,140,0.4);
   transition: filter .2s;
 }
-.popup-btn:hover { filter: brightness(1.15); }
-.popup-skip { font-size: 11px; color: rgba(255,255,255,0.3); cursor: pointer; text-decoration: underline; }
-.popup-skip:hover { color: white; }
-
-/* ── NAV ── */
-nav {
-  background: #0d0d0d;
-  border-bottom: 2px solid #e91e8c;
-  padding: 0 30px;
-  display: flex; align-items: center; gap: 30px; height: 64px;
+.popup-btn:hover { filter: brightness(1.1); }
+.popup-skip {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  cursor: pointer;
+  text-decoration: underline;
 }
-.nav-logo { font-size: 22px; font-weight: 900; display:flex; align-items:center; gap:8px; }
-.nav-logo .icon { font-size: 28px; }
-.nav-logo span { color: #e91e8c; }
-.nav-links { display: flex; gap: 24px; flex:1; }
-.nav-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 0; border-bottom: 2px solid transparent; transition: all .2s; }
-.nav-links a:hover, .nav-links a.active { color: white; border-bottom-color: #e91e8c; }
-.nav-links a.active { color: #e91e8c; }
-.nav-right { display: flex; gap: 10px; margin-left: auto; }
-.btn-login { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-.btn-signup { background: #e91e8c; border: none; color: white; padding: 8px 18px; border-radius: 4px; font-size: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-
-/* ── HERO ── */
-.hero {
-  display: grid; grid-template-columns: 1fr 280px; gap: 20px;
-  padding: 20px 30px; background: #0d0d0d;
-}
-.hero-main {
-  position: relative; border-radius: 6px; overflow: hidden;
-  min-height: 380px;
-  background: linear-gradient(135deg, #0a0a0a, #1a0a1a),
-    url('https://images.unsplash.com/photo-1529516222410-a269d812f500?w=900&q=80') center/cover;
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(0,0,0,0.9) 40%, transparent);
-  padding: 40px;
-  display: flex; flex-direction: column; justify-content: center;
-}
-.hero-tag { font-size: 11px; color: #e91e8c; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
-.hero-title { font-size: 42px; font-weight: 900; line-height: 1.1; max-width: 380px; }
-.hero-title em { color: #e91e8c; font-style: normal; display: block; }
-.hero-btn { margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; background: #e91e8c; color: white; padding: 12px 28px; border-radius: 4px; font-size: 14px; font-weight: 900; text-transform: uppercase; text-decoration: none; cursor: pointer; border: none; }
-
-.categories {
-  background: #1a1a1a; border-radius: 6px; padding: 18px; overflow: hidden;
-}
-.cat-title { color: #e91e8c; font-size: 13px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #2a2a2a; }
-.cat-item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #1f1f1f; font-size: 13px; color: rgba(255,255,255,0.7); cursor: pointer; transition: color .2s; text-decoration: none; }
-.cat-item:hover { color: #e91e8c; }
-.cat-item:last-child { border-bottom: none; }
-.cat-icon { font-size: 16px; }
-.cat-more { display: block; margin-top: 14px; color: #e91e8c; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; }
-.cat-more:hover { color: white; }
-
-/* ── VIDEOS ── */
-.section { padding: 30px; }
-.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-.section-header h2 { font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
-.section-header .icon { color: #e91e8c; font-size: 20px; }
-.section-header .see-all { margin-left: auto; color: #e91e8c; font-size: 12px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
-
-.grid-videos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-.video-card { cursor: pointer; }
-.video-thumb {
-  position: relative; aspect-ratio: 16/10; border-radius: 4px; overflow: hidden;
-  background: #222; margin-bottom: 8px;
-}
-.video-thumb img { width:100%; height:100%; object-fit:cover; transition: transform .3s; filter: saturate(1.2); }
-.video-card:hover .video-thumb img { transform: scale(1.05); }
-.video-duration {
-  position: absolute; bottom: 6px; right: 6px;
-  background: rgba(0,0,0,0.85); padding: 2px 6px; border-radius: 3px;
-  font-size: 11px; font-weight: 700;
-}
-.video-quality {
-  position: absolute; bottom: 6px; left: 6px;
-  background: #e91e8c; padding: 2px 5px; border-radius: 2px;
-  font-size: 9px; font-weight: 900; letter-spacing: 1px;
-}
-.video-price {
-  position: absolute; top: 8px; right: 8px;
-  background: rgba(0,0,0,0.9); border: 1px solid #e91e8c;
-  padding: 3px 8px; border-radius: 3px;
-  font-size: 12px; font-weight: 900; color: #e91e8c;
-}
-.video-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
-.video-meta { display: flex; align-items: center; gap: 8px; font-size: 10px; color: rgba(255,255,255,0.4); }
-.video-meta .rating { color: #e91e8c; }
-
-/* ── TICKER ── */
-.ticker { background: #e91e8c; padding: 8px 0; overflow: hidden; white-space: nowrap; }
-.ticker-inner { display: inline-block; animation: tick 25s linear infinite; font-size: 12px; font-weight: 700; letter-spacing: 2px; }
-@keyframes tick { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
-
-/* ── PREMIUM BANNER ── */
-.premium-strip {
-  margin: 0 30px 30px;
-  background: linear-gradient(135deg, #1a0010, #0d0d0d);
-  border: 1px solid #e91e8c;
-  border-radius: 6px;
-  padding: 30px 40px;
-  display: flex; align-items: center; gap: 40px;
-}
-.premium-strip h3 { font-size: 28px; font-weight: 900; }
-.premium-strip h3 span { color: #e91e8c; }
-.premium-strip p { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 6px; }
-.premium-strip .price { font-size: 42px; font-weight: 900; color: #e91e8c; white-space: nowrap; margin-left: auto; }
-.premium-strip .price small { font-size: 14px; color: rgba(255,255,255,0.5); display: block; text-align: right; }
-
-footer { background: #0a0a0a; border-top: 1px solid #1f1f1f; padding: 30px; text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; }
-footer .f-logo { font-size: 20px; font-weight: 900; margin-bottom: 8px; color: rgba(255,255,255,0.6); }
-footer .f-logo span { color: #e91e8c; }
+.popup-skip:hover { color: rgba(255,255,255,0.5); }
 </style>
 </head>
 <body>
 
+<!-- FOND PHOTOS -->
+<div class="bg-grid">
+  <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1469460340997-2f854421e72f?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1512310604669-443f26c35f52?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1529516222410-a269d812f500?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=400&q=80">
+  <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80">
+</div>
+<div class="bg-overlay"></div>
+
 <!-- POPUP -->
-<div class="popup-overlay" id="popup">
+<div class="popup-wrap">
   <div class="popup">
-    <div class="popup-header">
-      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-      <div class="popup-url">🔒 footsexyhardcore.com</div>
+    <div class="popup-bar">
+      <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+      <div class="url-bar">
+        <span class="lock">🔒</span>
+        <span class="domain">footsexyhardcore.sex</span>
+      </div>
     </div>
     <div class="popup-body">
-      <div class="popup-avatar">⚽</div>
-      <h2>Reprendre la <span>navigation</span> ?</h2>
-      <p>Vous étiez en train de regarder du contenu. Voulez-vous reprendre là où vous vous étiez arrêté ?</p>
-      <div class="popup-history">
-        <div class="popup-history-title">📂 Votre historique récent</div>
-        <div class="popup-item">
-          <img class="popup-thumb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=100&q=80" alt="">
-          <div class="popup-item-info">
-            <div class="popup-item-title">Vestiaire après le match</div>
-            <div class="popup-item-meta">2:47 — HD 1080p</div>
+      <div class="popup-icon">⚽🔥</div>
+      <div class="popup-title">Reprendre la<br><span>navigation ?</span></div>
+      <div class="popup-site">sur <strong>FOOTSEXYHARDCORE.SEX</strong></div>
+
+      <div class="history">
+        <div class="history-label">📂 Récemment consulté</div>
+        <div class="history-item">
+          <img class="h-thumb" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=100&q=80">
+          <div class="h-info">
+            <div class="h-title">Vestiaire après le match</div>
+            <div class="h-meta">2:47 • HD 1080p • <span style="color:#e91e8c">1 500€</span></div>
           </div>
-          <div class="popup-item-time">Il y a 12 min</div>
+          <div class="h-time">12 min</div>
         </div>
-        <div class="popup-item">
-          <img class="popup-thumb" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&q=80" alt="">
-          <div class="popup-item-info">
-            <div class="popup-item-title">Entraînement très privé</div>
-            <div class="popup-item-meta">4:03 — HD 4K</div>
+        <div class="history-item">
+          <img class="h-thumb" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&q=80">
+          <div class="h-info">
+            <div class="h-title">Entraînement très privé</div>
+            <div class="h-meta">4:03 • 4K • <span style="color:#e91e8c">3 200€</span></div>
           </div>
-          <div class="popup-item-time">Il y a 1h</div>
-        </div>
-        <div class="popup-item">
-          <img class="popup-thumb" src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=100&q=80" alt="">
-          <div class="popup-item-info">
-            <div class="popup-item-title">Après la douche — Exclu</div>
-            <div class="popup-item-meta">3:12 — HD 1080p</div>
-          </div>
-          <div class="popup-item-time">Hier</div>
+          <div class="h-time">1h</div>
         </div>
       </div>
-      <button class="popup-btn" onclick="document.getElementById('popup').style.display='none'">▶ REPRENDRE LA NAVIGATION</button>
-      <div class="popup-skip" onclick="document.getElementById('popup').style.display='none'">Non merci, recommencer depuis le début</div>
+
+      <button class="popup-btn" onclick="this.closest('.popup-wrap').style.display='none'">
+        ▶ REPRENDRE LA NAVIGATION
+      </button>
+      <div class="popup-skip" onclick="this.closest('.popup-wrap').style.display='none'">
+        Non merci, recommencer depuis le début
+      </div>
     </div>
   </div>
 </div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo"><span class="icon">⚽🔥</span> FOOT<span>SEXY</span>HARDCORE</div>
-  <div class="nav-links">
-    <a href="#" class="active">Accueil</a>
-    <a href="#">Vidéos</a>
-    <a href="#">Catégories</a>
-    <a href="#">Live Cams</a>
-    <a href="#">Favoris</a>
-    <a href="#" style="color:#e91e8c">⭐ Premium</a>
-  </div>
-  <div class="nav-right">
-    <button class="btn-login">Se connecter</button>
-    <button class="btn-signup">Inscription gratuite</button>
-  </div>
-</nav>
-
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">⚽ NOUVEAU : Édition Spéciale Mondial 2026 &nbsp;•&nbsp; 64 Nations, 1 seul désir &nbsp;•&nbsp; +500 vidéos exclusives disponibles &nbsp;•&nbsp; Accès Premium dès 9,99€/mois &nbsp;•&nbsp; 🔥 Contenu 4K Ultra HD &nbsp;•&nbsp; ⚽ NOUVEAU : Édition Spéciale Mondial 2026 &nbsp;•&nbsp;</div>
-</div>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-main">
-    <div class="hero-overlay">
-      <div class="hero-tag">🔥 Exclusivité Mondial 2026</div>
-      <div class="hero-title">FOOT & PLAISIR<em>LE MEILLEUR DU FOOT...<br>ENCORE PLUS COQUIN !</em></div>
-      <button class="hero-btn">▶ REGARDER MAINTENANT</button>
-    </div>
-  </div>
-  <div class="categories">
-    <div class="cat-title">Catégories</div>
-    <a class="cat-item" href="#"><span class="cat-icon">⭐</span> Les + populaires</a>
-    <a class="cat-item" href="#"><span class="cat-icon">🎬</span> Nouvelles vidéos</a>
-    <a class="cat-item" href="#"><span class="cat-icon">⚽</span> Footballeuses sexy</a>
-    <a class="cat-item" href="#"><span class="cat-icon">🏃</span> Entraînement coquin</a>
-    <a class="cat-item" href="#"><span class="cat-icon">🚿</span> Douches & vestiaires</a>
-    <a class="cat-item" href="#"><span class="cat-icon">🎥</span> Compilations hot</a>
-    <a class="cat-item" href="#"><span class="cat-icon">🏆</span> Coulisses du foot</a>
-    <a class="cat-item" href="#"><span class="cat-icon">🎭</span> Amateur</a>
-    <a class="cat-more" href="#">VOIR TOUTES LES CATÉGORIES ›</a>
-  </div>
-</div>
-
-<!-- VIDEOS POPULAIRES -->
-<div class="section">
-  <div class="section-header">
-    <span class="icon">🔥</span>
-    <h2>Vidéos Populaires</h2>
-    <a class="see-all" href="#">Voir tout ›</a>
-  </div>
-  <div class="grid-videos">
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80" alt="">
-        <div class="video-duration">2:15</div>
-        <div class="video-quality">1080p</div>
-        <div class="video-price">1 500€</div>
-      </div>
-      <div class="video-title">Attaque de charme</div>
-      <div class="video-meta"><span class="rating">★ 78%</span><span>2:15</span><span>1080p</span></div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80" alt="">
-        <div class="video-duration">3:24</div>
-        <div class="video-quality">1080p</div>
-        <div class="video-price">2 200€</div>
-      </div>
-      <div class="video-title">Après l'entraînement</div>
-      <div class="video-meta"><span class="rating">★ 82%</span><span>3:24</span><span>1080p</span></div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" alt="">
-        <div class="video-duration">2:07</div>
-        <div class="video-quality">4K</div>
-        <div class="video-price">890€</div>
-      </div>
-      <div class="video-title">Pénalty très spécial</div>
-      <div class="video-meta"><span class="rating">★ 76%</span><span>2:07</span><span>4K</span></div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=400&q=80" alt="">
-        <div class="video-duration">1:58</div>
-        <div class="video-quality">1080p</div>
-        <div class="video-price">3 000€</div>
-      </div>
-      <div class="video-title">Celebrate hot</div>
-      <div class="video-meta"><span class="rating">★ 84%</span><span>1:58</span><span>1080p</span></div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80" alt="">
-        <div class="video-duration">2:32</div>
-        <div class="video-quality">1080p</div>
-        <div class="video-price">750€</div>
-      </div>
-      <div class="video-title">Maillot très mouillé</div>
-      <div class="video-meta"><span class="rating">★ 79%</span><span>2:32</span><span>1080p</span></div>
-    </div>
-
-  </div>
-</div>
-
-<!-- PREMIUM STRIP -->
-<div class="premium-strip">
-  <div>
-    <h3>Accès <span>Premium</span></h3>
-    <p>Débloquez tout le contenu exclusif, vidéos 4K, live cams et coulisses inédites du Mondial 2026</p>
-  </div>
-  <div class="price">9,99€<small>/ mois</small></div>
-  <button class="btn-signup" style="padding:16px 32px; font-size:14px; white-space:nowrap">S'abonner maintenant ›</button>
-</div>
-
-<!-- SECTION MONDIAL -->
-<div class="section">
-  <div class="section-header">
-    <span class="icon">🏆</span>
-    <h2>Spécial Mondial 2026</h2>
-    <a class="see-all" href="#">Voir tout ›</a>
-  </div>
-  <div class="grid-videos">
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=400&q=80" alt="">
-        <div class="video-duration">4:12</div>
-        <div class="video-quality">4K</div>
-        <div class="video-price">5 500€</div>
-      </div>
-      <div class="video-title">La Brésilienne — Exclu Mondial</div>
-      <div class="video-meta"><span class="rating">★ 91%</span><span>4:12</span><span>4K</span></div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1469460340997-2f854421e72f?w=400&q=80" alt="">
-        <div class="video-duration">3:01</div>
-        <div class="video-quality">1080p</div>
-        <div class="video-price">1 200€</div>
-      </div>
-      <div class="video-title">France vs Brésil — Intime</div>
-      <div class="video-meta"><span class="rating">★ 88%</span><span>3:01</span><span>1080p</span></div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" alt="">
-        <div class="video-duration">2:44</div>
-        <div class="video-quality">4K</div>
-        <div class="video-price">4 000€</div>
-      </div>
-      <div class="video-title">Capitaine de nuit</div>
-      <div class="video-meta"><span class="rating">★ 93%</span><span>2:44</span><span>4K</span></div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1512310604669-443f26c35f52?w=400&q=80" alt="">
-        <div class="video-duration">5:00</div>
-        <div class="video-quality">4K</div>
-        <div class="video-price">9 999€</div>
-      </div>
-      <div class="video-title">La Reine d'Espagne — 5 min</div>
-      <div class="video-meta"><span class="rating">★ 97%</span><span>5:00</span><span>4K</span></div>
-    </div>
-
-    <div class="video-card">
-      <div class="video-thumb">
-        <img src="https://images.unsplash.com/photo-1529516222410-a269d812f500?w=400&q=80" alt="">
-        <div class="video-duration">3:33</div>
-        <div class="video-quality">4K</div>
-        <div class="video-price">7 777€</div>
-      </div>
-      <div class="video-title">Vestiaire Mondial — Collectif</div>
-      <div class="video-meta"><span class="rating">★ 95%</span><span>3:33</span><span>4K</span></div>
-    </div>
-
-  </div>
-</div>
-
-<footer>
-  <div class="f-logo">FOOT<span>SEXY</span>HARDCORE</div>
-  <p>© 2026 FootSexyHardcore.com — Tous droits réservés • Réservé aux personnes majeures 18+</p>
-</footer>
 
 </body>
 </html>
