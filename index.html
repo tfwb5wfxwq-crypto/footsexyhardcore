@@ -6,257 +6,119 @@
 <title>FOOTSEXYHARDCORE — Le Foot, Autrement</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
+body { background: #0a0a0a; color: white; font-family: 'Arial Black', Arial, sans-serif; }
 
-body {
-  background: #0a0a0a;
-  color: white;
-  font-family: 'Arial Black', Arial, sans-serif;
-}
-
-/* HEADER */
 header {
   background: linear-gradient(135deg, #1a0000, #0a0a0a);
   border-bottom: 3px solid #c00;
   padding: 20px 0;
   text-align: center;
-  position: relative;
-  overflow: hidden;
 }
-header::before {
-  content: '⚽ 🔥 ⚽ 🔥 ⚽ 🔥 ⚽ 🔥 ⚽ 🔥 ⚽ 🔥 ⚽ 🔥 ⚽';
-  position: absolute;
-  top: 5px; left: 0; right: 0;
-  font-size: 14px;
-  opacity: 0.3;
-  letter-spacing: 8px;
-}
-.logo {
-  font-size: 52px;
-  font-weight: 900;
-  letter-spacing: -1px;
-  line-height: 1;
-}
+.logo { font-size: 52px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
 .logo span.foot { color: white; }
 .logo span.sexy { color: #c00; }
 .logo span.hard { color: #ff4444; }
-.tagline {
-  font-size: 13px;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 4px;
-  margin-top: 6px;
-  text-transform: uppercase;
-}
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 18px;
-  font-size: 13px;
-  letter-spacing: 2px;
-}
-nav a {
-  color: rgba(255,255,255,0.6);
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: color .2s;
-}
+.tagline { font-size: 13px; color: rgba(255,255,255,0.4); letter-spacing: 4px; margin-top: 6px; text-transform: uppercase; }
+nav { display: flex; justify-content: center; gap: 30px; margin-top: 18px; font-size: 13px; letter-spacing: 2px; }
+nav a { color: rgba(255,255,255,0.6); text-decoration: none; text-transform: uppercase; transition: color .2s; }
 nav a:hover { color: #c00; }
 
-/* HERO BANNER */
 .hero {
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)),
               url('https://images.unsplash.com/photo-1529516222410-a269d812f500?w=1600&q=80') center/cover;
   height: 420px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;
 }
-.hero h1 {
-  font-size: 58px;
-  font-weight: 900;
-  text-shadow: 0 4px 20px rgba(200,0,0,0.8);
-  line-height: 1.1;
-}
+.hero h1 { font-size: 58px; font-weight: 900; text-shadow: 0 4px 20px rgba(200,0,0,0.8); line-height: 1.1; }
 .hero h1 em { color: #c00; font-style: normal; }
-.hero p {
-  font-size: 18px;
-  color: rgba(255,255,255,0.65);
-  margin-top: 14px;
-  max-width: 500px;
-}
-.btn {
-  margin-top: 24px;
-  background: #c00;
-  color: white;
-  border: none;
-  padding: 14px 40px;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 2px;
-  text-decoration: none;
-  display: inline-block;
-}
+.hero p { font-size: 18px; color: rgba(255,255,255,0.65); margin-top: 14px; max-width: 500px; }
+.btn { margin-top: 24px; background: #c00; color: white; border: none; padding: 14px 40px; font-size: 16px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 2px; text-decoration: none; display: inline-block; }
 .btn:hover { background: #ff2222; }
 
-/* SECTION */
-section {
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 0 20px;
-}
-.section-title {
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 30px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #c00;
-}
-.section-title span { color: #c00; }
+.ticker { background: #c00; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+.ticker-inner { display: inline-block; animation: ticker 22s linear infinite; font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+@keyframes ticker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-/* GRID PHOTOS */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-.card {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  aspect-ratio: 3/4;
-  background: #111;
-  cursor: pointer;
-}
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .4s;
-  filter: saturate(1.1);
-}
-.card:hover img { transform: scale(1.06); }
-.card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(transparent 50%, rgba(0,0,0,0.85));
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 16px;
-  opacity: 0;
-  transition: opacity .3s;
-}
-.card:hover .card-overlay { opacity: 1; }
-.card-name { font-size: 18px; font-weight: 900; }
-.card-role { font-size: 12px; color: #c00; letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
-.card-ball {
-  position: absolute;
-  top: 12px; right: 12px;
-  font-size: 28px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
-}
-
-/* STATS BAR */
-.stats {
-  background: #111;
-  border-top: 2px solid #1a1a1a;
-  border-bottom: 2px solid #1a1a1a;
-  display: flex;
-  justify-content: space-around;
-  padding: 30px 20px;
-  text-align: center;
-  margin: 40px 0;
-}
+.stats { background: #111; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; display: flex; justify-content: space-around; padding: 30px 20px; text-align: center; margin: 40px 0; }
 .stat-num { font-size: 48px; font-weight: 900; color: #c00; }
 .stat-label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; }
 
-/* SCORE TICKER */
-.ticker {
-  background: #c00;
-  padding: 10px 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.ticker-inner {
-  display: inline-block;
-  animation: ticker 20s linear infinite;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-@keyframes ticker {
-  0% { transform: translateX(100vw); }
-  100% { transform: translateX(-100%); }
-}
+section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+.section-title { font-size: 28px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 30px; padding-bottom: 12px; border-bottom: 2px solid #c00; }
+.section-title span { color: #c00; }
 
-/* FOOTER */
-footer {
-  background: #050505;
-  border-top: 2px solid #1a1a1a;
-  text-align: center;
-  padding: 40px 20px;
-  color: rgba(255,255,255,0.3);
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-footer .footer-logo { font-size: 24px; font-weight: 900; margin-bottom: 10px; }
-footer .footer-logo span { color: #c00; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.card { position: relative; border-radius: 4px; overflow: hidden; aspect-ratio: 3/4; background: #111; cursor: pointer; }
+.card img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; filter: saturate(1.2); }
+.card:hover img { transform: scale(1.06); }
+.card-overlay { position: absolute; inset: 0; background: linear-gradient(transparent 50%, rgba(0,0,0,0.9)); display: flex; flex-direction: column; justify-content: flex-end; padding: 16px; opacity: 0; transition: opacity .3s; }
+.card:hover .card-overlay { opacity: 1; }
+.card-name { font-size: 18px; font-weight: 900; }
+.card-role { font-size: 12px; color: #c00; letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
+.card-ball { position: absolute; top: 12px; right: 12px; font-size: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
 
-/* 18+ badge */
-.age-badge {
-  position: fixed;
-  bottom: 20px; right: 20px;
-  background: #c00;
-  color: white;
-  font-size: 11px;
+/* LOCK overlay sur certaines cartes */
+.card-locked::after {
+  content: '🔒 PREMIUM';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
   font-weight: 900;
-  padding: 6px 10px;
-  border-radius: 2px;
-  letter-spacing: 1px;
-  z-index: 999;
+  letter-spacing: 2px;
+  color: #c00;
 }
+
+.premium-banner {
+  background: linear-gradient(135deg, #1a0000, #2a0000);
+  border: 1px solid #c00;
+  border-radius: 4px;
+  padding: 40px;
+  text-align: center;
+  margin: 60px 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.premium-banner h2 { font-size: 32px; color: #c00; margin-bottom: 10px; }
+.premium-banner p { color: rgba(255,255,255,0.6); margin-bottom: 20px; }
+
+footer { background: #050505; border-top: 2px solid #1a1a1a; text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.3); font-size: 12px; letter-spacing: 1px; }
+.footer-logo { font-size: 24px; font-weight: 900; margin-bottom: 10px; }
+.footer-logo span { color: #c00; }
+
+.age-badge { position: fixed; bottom: 20px; right: 20px; background: #111; border: 1px solid #c00; color: #c00; font-size: 11px; font-weight: 900; padding: 6px 10px; border-radius: 2px; letter-spacing: 1px; z-index: 999; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
-  <div class="logo">
-    <span class="foot">FOOT</span><span class="sexy">SEXY</span><span class="hard">HARDCORE</span>
-  </div>
+  <div class="logo"><span class="foot">FOOT</span><span class="sexy">SEXY</span><span class="hard">HARDCORE</span></div>
   <div class="tagline">Le foot n'a jamais été aussi chaud ⚽🔥</div>
   <nav>
     <a href="#">Accueil</a>
     <a href="#">Galeries</a>
     <a href="#">Vidéos</a>
     <a href="#">Mondial 2026</a>
-    <a href="#">Contact</a>
+    <a href="#">Premium</a>
   </nav>
 </header>
 
-<!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    ⚽ MONDIAL 2026 &nbsp;&nbsp;•&nbsp;&nbsp; FRANCE VS BRÉSIL &nbsp;&nbsp;•&nbsp;&nbsp; NOUVELLE GALERIE DISPONIBLE &nbsp;&nbsp;•&nbsp;&nbsp; +50 NOUVELLES PHOTOS &nbsp;&nbsp;•&nbsp;&nbsp; ÉDITION SPÉCIALE COUPE DU MONDE &nbsp;&nbsp;•&nbsp;&nbsp; ⚽ MONDIAL 2026 &nbsp;&nbsp;•&nbsp;&nbsp; LES PLUS BELLES JOUEUSES DE LA PLANÈTE &nbsp;&nbsp;•&nbsp;&nbsp; EXCLUSIF &nbsp;&nbsp;•&nbsp;&nbsp;
+    ⚽ MONDIAL 2026 &nbsp;•&nbsp; NOUVELLES PHOTOS EXCLUSIVES &nbsp;•&nbsp; +50 JOUEUSES &nbsp;•&nbsp; ÉDITION SPÉCIALE COUPE DU MONDE &nbsp;•&nbsp; LES PLUS BELLES JOUEUSES DE LA PLANÈTE &nbsp;•&nbsp; ACCÈS PREMIUM DISPONIBLE &nbsp;•&nbsp; ⚽ MONDIAL 2026 &nbsp;•&nbsp;
   </div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
   <h1>Le Foot<br><em>Autrement</em> 🔥</h1>
-  <p>La première plateforme parodique dédiée aux joueuses de foot les plus chaudes de la planète</p>
-  <a href="#" class="btn">Entrer ⚽</a>
+  <p>La plateforme dédiée aux joueuses les plus chaudes de la planète. Photos exclusives, galeries premium, contenu inédit.</p>
+  <a href="#" class="btn">Accéder au site ⚽</a>
 </div>
 
-<!-- STATS -->
 <div class="stats">
   <div><div class="stat-num">2,847</div><div class="stat-label">Photos</div></div>
   <div><div class="stat-num">312</div><div class="stat-label">Joueuses</div></div>
@@ -264,111 +126,76 @@ footer .footer-logo span { color: #c00; }
   <div><div class="stat-num">1M+</div><div class="stat-label">Visiteurs</div></div>
 </div>
 
-<!-- GALERIE -->
 <section>
   <div class="section-title">⚽ Galerie <span>Mondiale 2026</span></div>
   <div class="grid">
-
     <div class="card">
       <div class="card-ball">⚽</div>
       <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Sofia R.</div>
-        <div class="card-role">Attaquante • Brésil</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Sofia R.</div><div class="card-role">Attaquante • Brésil</div></div>
     </div>
-
     <div class="card">
       <div class="card-ball">🔥</div>
       <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Maria L.</div>
-        <div class="card-role">Milieu • Espagne</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Maria L.</div><div class="card-role">Milieu • Espagne</div></div>
     </div>
-
     <div class="card">
       <div class="card-ball">⚽</div>
       <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Camille D.</div>
-        <div class="card-role">Gardienne • France</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Camille D.</div><div class="card-role">Gardienne • France</div></div>
     </div>
-
-    <div class="card">
+    <div class="card card-locked">
       <div class="card-ball">🏆</div>
       <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Jessica M.</div>
-        <div class="card-role">Défenseure • USA</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Jessica M.</div><div class="card-role">Défenseure • USA</div></div>
     </div>
-
-    <div class="card">
+    <div class="card card-locked">
       <div class="card-ball">⚽</div>
       <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Ana K.</div>
-        <div class="card-role">Attaquante • Allemagne</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Ana K.</div><div class="card-role">Attaquante • Allemagne</div></div>
     </div>
-
-    <div class="card">
+    <div class="card card-locked">
       <div class="card-ball">🔥</div>
       <img src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Léa T.</div>
-        <div class="card-role">Milieu • France</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Léa T.</div><div class="card-role">Milieu • France</div></div>
     </div>
-
   </div>
 </section>
 
-<!-- SECTION MONDIAL -->
+<div class="premium-banner">
+  <h2>🔒 ACCÈS PREMIUM</h2>
+  <p>Débloquez +2000 photos exclusives, galeries privées et contenu inédit des joueuses du monde entier</p>
+  <a href="#" class="btn">Rejoindre Premium — 9,99€/mois</a>
+</div>
+
 <section>
   <div class="section-title">🏆 Spécial <span>Mondial 2026</span></div>
   <div class="grid">
-
     <div class="card">
       <div class="card-ball">🇧🇷</div>
       <img src="https://images.unsplash.com/photo-1469460340997-2f854421e72f?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Beatriz S.</div>
-        <div class="card-role">Samba Queen • Brésil</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Beatriz S.</div><div class="card-role">Samba Queen • Brésil</div></div>
     </div>
-
     <div class="card">
       <div class="card-ball">🇫🇷</div>
       <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Chloé B.</div>
-        <div class="card-role">Capitaine • France</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Chloé B.</div><div class="card-role">Capitaine • France</div></div>
     </div>
-
-    <div class="card">
+    <div class="card card-locked">
       <div class="card-ball">🇪🇸</div>
       <img src="https://images.unsplash.com/photo-1512310604669-443f26c35f52?w=600&q=80" alt="">
-      <div class="card-overlay">
-        <div class="card-name">Isabella G.</div>
-        <div class="card-role">Dribbleuse • Espagne</div>
-      </div>
+      <div class="card-overlay"><div class="card-name">Isabella G.</div><div class="card-role">Dribbleuse • Espagne</div></div>
     </div>
-
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">FOOT<span>SEXY</span>HARDCORE</div>
-  <p>Site parodique • Aucun lien avec la FIFA ou les fédérations officielles</p>
-  <p style="margin-top:8px">© 2026 FootSexyHardcore — Tous droits réservés • Images : Unsplash (CC0)</p>
+  <p>© 2026 FootSexyHardcore — Tous droits réservés</p>
+  <p style="margin-top:8px; font-size:10px">Réservé aux personnes majeures • 18+</p>
 </footer>
 
-<div class="age-badge">⚠️ PARODIE 18+</div>
+<div class="age-badge">18+</div>
 
 </body>
 </html>
